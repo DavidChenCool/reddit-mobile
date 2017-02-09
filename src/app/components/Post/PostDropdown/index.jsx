@@ -35,6 +35,8 @@ export default function PostDropdown(props) {
     modModalId,
     distinguishType,
     isMine,
+    userReports,
+    modReports,
   } = props;
 
   if (showModModal && isSubredditModerator) {
@@ -55,8 +57,9 @@ export default function PostDropdown(props) {
         isMine={ isMine }
         distinguishType={ distinguishType }
         targetType={ ModelTypes.POST }
-      >
-      </ModeratorModal>
+        userReports={ userReports }
+        modReports={ modReports }
+      />
     );
   }
 
@@ -142,6 +145,8 @@ PostDropdown.propTypes = {
   removedBy: T.string,
   modModalId: T.string,
   showModModal: T.bool,
+  userReports: T.arrayOf(T.arrayOf(T.oneOf(T.string, T.number))),
+  modReports: T.arrayOf(T.arrayOf(T.oneOf(T.string, T.number))),
 };
 
 PostDropdown.defaultProps = {
@@ -150,10 +155,12 @@ PostDropdown.defaultProps = {
   isSaved: false,
   isLoggedIn: false,
   isHidden: false,
+  modModalId: null,
+  modReports: [],
   onToggleSave: () => {},
   onToggleHide: () => {},
   onToggleEdit: () => {},
   onToggleModal: () => {},
-  modModalId: null,
   showModModal: false,
+  userReports: [],
 };

@@ -119,6 +119,8 @@ export default class PostFooter extends React.Component {
         modModalId={ modModalId }
         distinguishType={ post.distinguished }
         isMine={ user && user.name === post.author }
+        userReports={ post.userReports }
+        modReports={ post.modReports }
       />
     );
   }

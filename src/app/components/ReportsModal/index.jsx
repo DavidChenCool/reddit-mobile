@@ -1,3 +1,4 @@
+import './styles.less';
 import React from 'react';
 import { ApprovalStatusBanner } from 'app/components/ApprovalStatusBanner';
 import { getStatusBy, getApprovalStatus } from 'lib/modToolHelpers.js';
@@ -7,7 +8,6 @@ const T = React.PropTypes;
 export function ReportsModal(props) {
   const {
     id,
-    onToggleModal,
     userReports,
     modReports,
     isApproved,
@@ -18,7 +18,7 @@ export function ReportsModal(props) {
   } = props;
 
   return (
-    <DropdownModal id={ id } onClick={ onToggleModal }>
+    <div>
       <ApprovalStatusBanner
         status={ getApprovalStatus(isApproved,
                                    isRemoved,
@@ -30,24 +30,27 @@ export function ReportsModal(props) {
                                approvedBy,) }
         pageName={ 'moderatorModal' }
       />
-      <DropdownRow text='Moderator Reports'/>
-      { 
-        modReports.map(function(report) {
-          return (
-            <DropdownRow text={ `${report.username}: ${report.reason}` } />
-          );
-        })
-      }
-      <DropdownRow text='User Reports'/>
-      { 
-        userReports.map(function(report) {
-          return (
-            <DropdownRow text={ `${report.count}: ${report.reason}` } />
-          );
-        })
-      }
-    </DropdownModal>
+      { showReports(modReports, 'Moderator') }
+      { showReports(userReports, 'User')}
+    </div>
   );
+}
+
+function showReports(reports, reportType) {
+  if (reports.length > 0) {
+    return (
+      <div className='Reports'>
+        <div className='m-reports-title'>{ `${reportType} Reports:` }</div>
+        {
+          reports.map(function(report) {
+            return (
+              <div>{ `${report[1]}: ${report[0]}` }</div>
+            );
+          })
+        }
+      </div>
+    );
+  }
 }
 
 ReportsModal.propTypes = {
