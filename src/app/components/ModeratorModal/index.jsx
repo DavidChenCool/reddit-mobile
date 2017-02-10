@@ -38,7 +38,7 @@ export class ModeratorModal extends React.Component {
   }
 
   toggleReportsModal(e, onClick=null) {
-    if (!onClick){
+    if (!onClick) {
       // don't close the modal -- show report modal instead
       e.stopPropagation();
     } else {
@@ -67,7 +67,6 @@ export class ModeratorModal extends React.Component {
             <div onClick={ (e) => this.toggleReportsModal(e, this.props.onClick) }>
               <div className='ModeratorModalRowWrapper'>
                 <ReportsModal
-                  id={ this.props.modModalId }
                   userReports={ this.props.userReports }
                   modReports={ this.props.modReports }
                   isApproved={ this.props.isApproved }
@@ -80,7 +79,7 @@ export class ModeratorModal extends React.Component {
             </div>
           </Modal>
         </div>
-      )
+      );
     }
 
     return (
@@ -132,7 +131,7 @@ export class ModeratorModal extends React.Component {
                 : null
               }
               { 
-                (this.props.userReports || this.props.modReports) &&
+                (this.props.userReports.length > 0 || this.props.modReports.length > 0) &&
                 <DropdownRow
                   icon='flag'
                   text='Reports'

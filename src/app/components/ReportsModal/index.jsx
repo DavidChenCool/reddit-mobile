@@ -2,12 +2,10 @@ import './styles.less';
 import React from 'react';
 import { ApprovalStatusBanner } from 'app/components/ApprovalStatusBanner';
 import { getStatusBy, getApprovalStatus } from 'lib/modToolHelpers.js';
-import { DropdownModal, DropdownRow } from 'app/components/Dropdown';
 const T = React.PropTypes;
 
 export function ReportsModal(props) {
   const {
-    id,
     userReports,
     modReports,
     isApproved,
@@ -31,7 +29,7 @@ export function ReportsModal(props) {
         pageName={ 'moderatorModal' }
       />
       { showReports(modReports, 'Moderator') }
-      { showReports(userReports, 'User')}
+      { showReports(userReports, 'User') }
     </div>
   );
 }
@@ -54,7 +52,6 @@ function showReports(reports, reportType) {
 }
 
 ReportsModal.propTypes = {
-  id: T.string.isRequired,
   onToggleModal: T.func.isRequired,
   userReports: T.arrayOf(T.object),
   modReports: T.arrayOf(T.object),
