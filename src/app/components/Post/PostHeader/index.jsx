@@ -220,10 +220,10 @@ function renderModStatusFlair(post) {
   } = post;
 
   const reportCounts = sumReportsCount(userReports, modReports);
-  const REPORT_FLAIR = (
-    [<span className={`icon icon-flag ${ approved ? '' : 'warning-yellow' }`}/>,
-    <span className={`m-report-count ${ approved ? '' : 'warning-yellow' }`}> { reportCounts } </span>]
-  );
+  const REPORT_FLAIR = ([
+    <span className={ `icon icon-flag ${ approved ? '' : 'warning-yellow' }` }/>,
+    <span className={ `m-report-count ${ approved ? '' : 'warning-yellow' }` }> { reportCounts } </span>,
+  ]);
 
 
   if (!(approved || removed || spam || locked || distinguished !== ''
