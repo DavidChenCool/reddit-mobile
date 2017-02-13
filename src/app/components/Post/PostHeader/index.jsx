@@ -221,7 +221,8 @@ function renderModStatusFlair(post) {
 
   const reportCounts = sumReportsCount(userReports, modReports);
   const REPORT_FLAIR = (
-    <span className='icon icon-flag gold'> { reportCounts }</span>
+    [<span className={`icon icon-flag ${ approved ? '' : 'warning-yellow' }`}/>,
+    <span className={`m-report-count ${ approved ? '' : 'warning-yellow' }`}> { reportCounts } </span>]
   );
 
 
