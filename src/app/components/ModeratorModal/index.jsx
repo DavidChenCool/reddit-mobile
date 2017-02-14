@@ -3,14 +3,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { endpoints, models } from '@r/api-client';
-import { Modal } from '@r/widgets/modal';
+import { Modal, ModalTarget } from '@r/widgets/modal';
 import { ModalBanner } from 'app/components/ModalBanner';
 import { DropdownRow } from 'app/components/Dropdown';
 import modelFromThingId from 'app/reducers/helpers/modelFromThingId';
 import { getStatusBy, getApprovalStatus } from 'lib/modToolHelpers.js';
 import * as modActions from 'app/actions/modTools';
-
-import { ReportsModal } from 'app/components/ReportsModal';
 
 const { Modtools } = endpoints;
 const DISTINGUISH_TYPES = Modtools.DISTINGUISH_TYPES;
@@ -18,14 +16,6 @@ const { ModelTypes } = models;
 const T = React.PropTypes;
 
 export class ModeratorModal extends React.Component {
-  constructor (props) {
-    super(props);
-
-    this.state = {
-      showReportsModal: false,
-    };
-  }
-
   onDistinguish(distinguishType) {
     const type = (distinguishType === DISTINGUISH_TYPES.NONE
                           ? DISTINGUISH_TYPES.MODERATOR
@@ -37,15 +27,8 @@ export class ModeratorModal extends React.Component {
     return !(distinguishType === DISTINGUISH_TYPES.NONE);
   }
 
-  toggleReportsModal(e, onClick=null) {
-    if (!onClick) {
-      // don't close the modal -- show report modal instead
-      e.stopPropagation();
-    } else {
-      onClick();
-    }
-
-    this.setState({ showReportsModal: !this.state.showReportsModal });
+  preventModalClose(e) {
+    e.stopPropagation();
   }
 
   render() {
@@ -55,31 +38,6 @@ export class ModeratorModal extends React.Component {
     } else if (this.props.targetType === ModelTypes.COMMENT) {
       const { isMine, target } = this.props;
       canSticky = isMine && target.parentId === target.linkId;
-    }
-
-    if (this.state.showReportsModal) {
-      return (
-        <div className='ModeratorModalWrapper' onClick={ (e) => this.toggleReportsModal(e, this.props.onClick) }>
-          <Modal
-            id={ this.props.modModalId }
-            className='DropdownModal ModeratorModal'
-          >
-            <div onClick={ (e) => this.toggleReportsModal(e, this.props.onClick) }>
-              <div className='ModeratorModalRowWrapper'>
-                <ReportsModal
-                  userReports={ this.props.userReports }
-                  modReports={ this.props.modReports }
-                  isApproved={ this.props.isApproved }
-                  isRemoved={ this.props.isRemoved }
-                  isSpam={ this.props.isSpam }
-                  approvedBy={ this.props.approvedBy }
-                  removedBy={ this.props.removedBy }
-                />
-              </div>
-            </div>
-          </Modal>
-        </div>
-      );
     }
 
     return (
@@ -132,12 +90,17 @@ export class ModeratorModal extends React.Component {
               }
               { 
                 (this.props.userReports.length > 0 || this.props.modReports.length > 0) &&
-                <DropdownRow
-                  icon='flag'
-                  text='Reports'
-                  onClick={ (e) => this.toggleReportsModal(e) }
-                  isSelected={ true }
-                />
+                <div onClick={ (e) => this.preventModalClose(e) }>
+                  <ModalTarget
+                    id={ this.props.reportModalId }
+                  >
+                    <DropdownRow
+                      icon='flag'
+                      text='Reports'
+                      isSelected={ true }
+                    />
+                  </ModalTarget>
+                </div>
               }
               { this.props.isMine
                 ? <DropdownRow

@@ -74,7 +74,7 @@ export default class PostFooter extends React.Component {
     return `${numberOfComments} Comments`;
   }
 
-  renderDropdown(props, showModModal, modModalId) {
+  renderDropdown(props, showModModal, modModalId, reportModalId) {
     const {
       post,
       user,
@@ -121,6 +121,7 @@ export default class PostFooter extends React.Component {
         isMine={ user && user.name === post.author }
         userReports={ post.userReports }
         modReports={ post.modReports }
+        reportModalId={ reportModalId }
       />
     );
   }
@@ -134,6 +135,7 @@ export default class PostFooter extends React.Component {
     } = this.props;
 
     const modModalId = `mod-${post.name}`;
+    const reportModalId = `report-${post.name}`;
     const scoreHidden = post.hideScore || post.score_hidden; // XXX when does a post have score_hidden?
     return (
       <footer className={ `PostFooter ${compact ? 'size-compact' : ''}` }>
@@ -162,7 +164,7 @@ export default class PostFooter extends React.Component {
           />
         </div>
         { this.renderDropdown(this.props, false, null) }
-        { isSubredditModerator ? this.renderDropdown(this.props, true, modModalId) : null }
+        { isSubredditModerator ? this.renderDropdown(this.props, true, modModalId, reportModalId) : null }
       </footer>
     );
   }

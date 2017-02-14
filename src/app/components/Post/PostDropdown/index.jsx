@@ -8,6 +8,8 @@ import {
   DropdownLinkRow,
 } from 'app/components/Dropdown';
 
+import { ReportsModal } from 'app/components/ReportsModal';
+
 const { ModelTypes } = models;
 const T = React.PropTypes;
 
@@ -37,29 +39,45 @@ export default function PostDropdown(props) {
     isMine,
     userReports,
     modReports,
+    reportModalId,
   } = props;
 
   if (showModModal && isSubredditModerator) {
     return (
-      <ModeratorModal
-        id={ id }
-        modModalId={ modModalId }
-        onClick={ onToggleModal }
-        isSticky={ isSticky }
-        isRemoved={ isRemoved }
-        isApproved={ isApproved }
-        isSpam={ isSpam }
-        isLocked={ isLocked }
-        isNSFW={ isNSFW }
-        isSpoiler={ isSpoiler }
-        approvedBy={ approvedBy }
-        removedBy={ removedBy }
-        isMine={ isMine }
-        distinguishType={ distinguishType }
-        targetType={ ModelTypes.POST }
-        userReports={ userReports }
-        modReports={ modReports }
-      />
+      <div>
+        <ModeratorModal
+          id={ id }
+          modModalId={ modModalId }
+          onClick={ onToggleModal }
+          isSticky={ isSticky }
+          isRemoved={ isRemoved }
+          isApproved={ isApproved }
+          isSpam={ isSpam }
+          isLocked={ isLocked }
+          isNSFW={ isNSFW }
+          isSpoiler={ isSpoiler }
+          approvedBy={ approvedBy }
+          removedBy={ removedBy }
+          isMine={ isMine }
+          distinguishType={ distinguishType }
+          targetType={ ModelTypes.POST }
+          userReports={ userReports }
+          modReports={ modReports }
+          reportModalId={ reportModalId }
+        />
+        <ReportsModal
+          id={ id }
+          reportModalId={ reportModalId }
+          isRemoved={ isRemoved }
+          isApproved={ isApproved }
+          isSpam={ isSpam }
+          approvedBy={ approvedBy }
+          removedBy={ removedBy }
+          userReports={ userReports }
+          modReports={ modReports }
+          onClick={ onToggleModal }
+        />
+      </div>
     );
   }
 

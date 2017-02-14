@@ -1,5 +1,7 @@
 import './styles.less';
 import React from 'react';
+import { Modal } from '@r/widgets/modal';
+import { DropdownRow } from 'app/components/Dropdown';
 import { ModalBanner } from 'app/components/ModalBanner';
 import { getStatusBy, getApprovalStatus } from 'lib/modToolHelpers.js';
 const T = React.PropTypes;
@@ -13,23 +15,39 @@ export function ReportsModal(props) {
     isSpam,
     removedBy,
     approvedBy,
+    reportModalId,
+    onClick,
+    id,
   } = props;
 
   return (
-    <div>
-      <ModalBanner
-        status={ getApprovalStatus(isApproved,
+    <div className='ModeratorModalWrapper' onClick={ onClick }>
+      <Modal
+        id={ reportModalId }
+        className='DropdownModal ModeratorModal'
+      >
+        <div className='DropdownClose'>
+          <DropdownRow
+            icon='x'
+            onClick={ onClick }
+          />
+        </div>
+        <div className='ModeratorModalRowWrapper'>
+          <ModalBanner
+            status={ getApprovalStatus(isApproved,
+                                       isRemoved,
+                                       isSpam,) }
+            statusBy={ getStatusBy(isApproved,
                                    isRemoved,
-                                   isSpam,) }
-        statusBy={ getStatusBy(isApproved,
-                               isRemoved,
-                               isSpam,
-                               removedBy,
-                               approvedBy,) }
-        pageName={ 'moderatorModal' }
-      />
-      { showReports(modReports, 'Moderator') }
-      { showReports(userReports, 'User') }
+                                   isSpam,
+                                   removedBy,
+                                   approvedBy,) }
+            pageName={ 'moderatorModal' }
+          />
+          { showReports(modReports, 'Moderator') }
+          { showReports(userReports, 'User') }
+        </div>
+      </Modal>
     </div>
   );
 }
