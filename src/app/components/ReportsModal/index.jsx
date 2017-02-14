@@ -1,6 +1,6 @@
 import './styles.less';
 import React from 'react';
-import { ApprovalStatusBanner } from 'app/components/ApprovalStatusBanner';
+import { ModalBanner } from 'app/components/ModalBanner';
 import { getStatusBy, getApprovalStatus } from 'lib/modToolHelpers.js';
 const T = React.PropTypes;
 
@@ -17,7 +17,7 @@ export function ReportsModal(props) {
 
   return (
     <div>
-      <ApprovalStatusBanner
+      <ModalBanner
         status={ getApprovalStatus(isApproved,
                                    isRemoved,
                                    isSpam,) }

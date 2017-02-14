@@ -232,7 +232,7 @@ function renderModStatusFlair(post) {
   }
 
   return (
-    <span className='PostHeader__approval-status-flair'>
+    <span className='PostHeader__mod-status-flair'>
       { stickied ? STICKY_FLAIR : null }
       { distinguished === 'moderator' ? MOD_FLAIR : null }
       { locked ? LOCKED_FLAIR : null }
